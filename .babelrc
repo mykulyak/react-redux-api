@@ -1,0 +1,10 @@
+{
+  "plugins": ["unassert"],
+  "presets": ["react", "env"],
+  "env": {
+    "production": {
+      "plugins": ["unassert"],
+      "presets": ["babili", "react", "env"]
+    }
+  }
+}

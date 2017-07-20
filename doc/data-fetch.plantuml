@@ -1,0 +1,79 @@
+
+/'
+Diagram stanów procesu pobierania danych za pomoc¹ API.
+
+dao.call() - dowolny strzal na serwer
+dao.invalidate() - oznaczenie danych jako nieaktualnych
+
+isFetching - czy oczekujemy odpowiedzi z serwera
+didInvalidate - czy dane zosta³y jawnie zinwalidowane
+lastFetched - timestamp momentu w którym po raz ostatni uzyskano odpowiedŸ z serwera (zarówno w przypadku sukcesu jak
+    i b³êdu)
+lastError - jeœli ostatnie wywo³anie dao.call() zakoñczy³o siê b³êdem, obiekt Error. W przeciwnym przypadku null
+data - jeœli ostatnie wywo³anie dao.call() zakoñczy³o siê pomyœlnie, dane zwrócone przez serwer. W przypadku
+    wyst¹pienia b³êdu - null
+
+Identyfikacja stanów:
+
+ready : isFetching==false && lastFetched==null && lastError==null && data==null
+fetching : isFetching==true
+invalidated : didInvalidate==true
+success : isFetching==false && lastFetched!=null && lastError==null
+failure : isFetching==false && lastFetched!=null && lastError!=null
+'/
+
+@startuml
+
+[*] --> ready
+
+ready -> fetching : dao.call()
+
+ready: isFetching=false
+ready: didInvalidate=true
+ready: lastFetched=null
+ready: lastError=null
+ready: data=null
+
+fetching: isFetching=true
+fetching: didInvalidate=false
+fetching: lastFetched=N/A
+fetching: lastError=N/A
+fetching: data=N/A
+
+fetching --> invalidated : dao.invalidate()
+fetching --> success : dao.call() succeeded
+fetching --> error : dao.call() failed
+
+success: isFetching=false
+success: didInvalidate=false
+success: lastFetched=TS
+success: lastError=null
+success: data=DATA
+
+success --> fetching : dao.call() && cache expired
+success --> success : dao.call() && cache alive
+success --> invalidated : dao.invalidate()
+
+error: isFetching=false
+error: didInvalidate=false
+error: lastFetched=TS
+error: lastError=ERROR
+error: data=null
+
+error --> fetching : dao.call()
+error --> invalidated : dao.invalidate()
+
+invalidated: isFetching=N/A
+invalidated: didInvalidate=true
+invalidated: lastFetched=N/A
+invalidated: lastError=N/A
+invalidated: data=N/A
+
+invalidated --> fetching : dao.call()
+
+invalidated --> [*]
+success --> [*]
+error --> [*]
+ready --> [*]
+
+@enduml
