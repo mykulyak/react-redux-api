@@ -2,7 +2,7 @@
   "name": "@mykulyak/react-redux-api",
   "version": "0.1.0",
   "description": "Library that simplifies writing API-related code in React+Redux applications.",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "test"
   },
