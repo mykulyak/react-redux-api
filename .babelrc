@@ -1,10 +1,7 @@
 {
   "plugins": ["unassert"],
-  "presets": ["react", "env"],
-  "env": {
-    "production": {
-      "plugins": ["unassert"],
-      "presets": ["babili", "react", "env"]
-    }
-  }
+  "presets": [
+    "react",
+    ["env", { "targets": { "node": "6.9.5" } }]
+  ]
 }

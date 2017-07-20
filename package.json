@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "description": "Library that simplifies writing API-related code in React+Redux applications.",
   "main": "src/index.js",
-  "directories": {
-    "test": "test"
-  },
+  "directories": {},
   "scripts": {
-    "test": "mocha test/*.js --compilers js:babel-register --require babel-register --recursive",
+    "test": "mocha test/index.js --compilers js:babel-register --require babel-register --recursive",
     "lint": "eslint src text --ext .js --ext .jsx"
   },
   "repository": {
@@ -33,6 +31,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-babili": "^0.1.4",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",

@@ -563,17 +563,6 @@ function createApi(config /* , options */) {
 }
 
 class Provider extends Component {
-  static displayName = 'ApiProvider';
-
-  static propTypes = {
-    apiConfig: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    children: PropTypes.node.isRequired
-  };
-
-  static childContextTypes = {
-    api: PropTypes.object.isRequired
-  };
-
   constructor(props) {
     super(props);
     this.api = createApi(props.apiConfig);
@@ -587,6 +576,17 @@ class Provider extends Component {
     return Children.only(this.props.children);
   }
 }
+
+Provider.displayName = 'ApiProvider';
+
+Provider.propTypes = {
+  apiConfig: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.node.isRequired
+};
+
+Provider.childContextTypes = {
+  api: PropTypes.object.isRequired
+};
 
 export {
   objectIdFromResponse,

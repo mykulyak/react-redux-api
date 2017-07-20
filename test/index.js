@@ -21,7 +21,7 @@ import {
   createReadEndpoint,
   createUpdateEndpoint,
   createDeleteEndpoint
-} from '../api';
+} from '../src/index';
 
 chai.use(chaiPromised);
 chai.use(chaiReduxMockStore);
